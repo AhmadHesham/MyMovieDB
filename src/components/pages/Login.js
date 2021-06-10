@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import FilmReel from '../../assets/login-shape.svg';
 import {signin} from '../../actions/AuthActions';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
     root: {
@@ -56,6 +57,7 @@ const useStyles = makeStyles({
 export default function Login() {
     const classes = useStyles();
     const dispatch = useDispatch();
+    const history = useHistory();
     const [state, setState] = React.useState({
         username: '',
         password: ''
@@ -72,7 +74,7 @@ export default function Login() {
     }
     const handleLogin = (event) => {
         event.preventDefault();
-        dispatch(signin(state));
+        dispatch(signin(state, history));
     }
 
     return (
@@ -80,7 +82,7 @@ export default function Login() {
             <div className={classes.container}>
                 <div className={classes.form}>
                     <TextField name="username" style={{ marginBottom: '1vw' }} InputProps={{ className: classes.username }} placeholder="Username" onChange={handleChange} />
-                    <TextField name="password" style={{ marginBottom: '1vw' }} inputProps={{ className: classes.password }} placeholder="Password" onChange={handleChange} />
+                    <TextField name="password" style={{ marginBottom: '1vw' }} inputProps={{ className: classes.password }} type="password" placeholder="Password" onChange={handleChange} />
                     <Button className={classes.btn} variant="outlined" onClick={handleLogin}>Log In</Button>
                 </div>
                 <div className={classes.imageContainer}>
