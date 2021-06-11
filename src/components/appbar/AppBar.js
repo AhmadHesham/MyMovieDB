@@ -19,7 +19,7 @@ import { useHistory } from 'react-router';
 const useStyles = makeStyles((theme) => ({
     root: {
         backgroundColor: 'rgba(0, 0, 0, 0)',
-        height: '7%',
+        height: '5vw',
         boxShadow: 'none'
     },
     logo: {

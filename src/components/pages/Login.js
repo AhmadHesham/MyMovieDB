@@ -9,7 +9,7 @@ import { useHistory } from 'react-router';
 
 const useStyles = makeStyles({
     root: {
-        height: '100vh',
+        height: '100%',
         backgroundColor: 'black'
     },
     container: {
