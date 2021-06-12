@@ -13,12 +13,12 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Logo from '../../assets/logo.svg'
 import Search from '../../assets/search.svg'
-import {signout} from '../../actions/AuthActions'
+import { signout } from '../../actions/AuthActions'
 import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: 'rgba(0, 0, 0, 0)',
+        backgroundColor: 'rgba(0, 0, 0, 1)',
         height: '5vw',
         boxShadow: 'none'
     },
@@ -43,7 +43,9 @@ const useStyles = makeStyles((theme) => ({
     divider: {
         backgroundColor: '#3d403d',
         width: '98vw',
-        marginTop: '1vw'
+        // marginTop: '1vw',
+        position: 'absolute',
+        bottom: 0
     },
     searchContainer: {
         display: 'flex',
@@ -86,47 +88,48 @@ export default function ButtonAppBar() {
 
     const handleClose = () => {
         setAnchorEl(null);
-      };
+    };
 
     return (
         <AppBar position="fixed" className={classes.root}>
-            <Toolbar style={{ display: 'flex', marginTop: '1vw' }}>
-                <div style={{ flexGrow: 1 }}>
-                    <img className={classes.logo} src={Logo} alt="Logo" />
-                </div>
-                {isLogged ?
-                    <div className={classes.userProps}>
-                        <div className={classes.searchContainer}>
-                            <TextField InputProps={{
-                                className: classes.searchProps,
-                                endAdornment: <InputAdornment> <img src={Search} alt="search icon" /> </InputAdornment>
-                            }}
-                                variant="outlined" className={classes.search} placeholder="Search for a movie...">
-                            </TextField>
-                        </div>
-                        <div className={classes.avatarContainer}>
-                            <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} className={classes.btn}>
-                                <Avatar style={{ marginRight: '0.5vw' }}>{userInfo.username.charAt(0)}</Avatar>
-                                {userInfo.username}
-                                {Boolean(anchorEl) ? <ExpandLess /> : <ExpandMore />}
-                            </Button>
-                            <Menu
-                                id="simple-menu"
-                                keepMounted
-                                anchorEl={anchorEl}
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                                style={{marginTop: '3vw', marginLeft: '5vw'}}
-                            >
-                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
-                            </Menu>
-                        </div>
+            <Toolbar style={{position:'relative', display: 'flex', marginTop: '1vw', flexDirection: 'column'}}>
+                <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginBottom: '1vw' }}>
+                    <div style={{ flexGrow: 1 }}>
+                        <img className={classes.logo} src={Logo} alt="Logo" />
                     </div>
-                    : ''}
+                    {isLogged ?
+                        <div className={classes.userProps}>
+                            <div className={classes.searchContainer}>
+                                <TextField InputProps={{
+                                    className: classes.searchProps,
+                                    endAdornment: <InputAdornment> <img src={Search} alt="search icon" /> </InputAdornment>
+                                }}
+                                    variant="outlined" className={classes.search} placeholder="Search for a movie...">
+                                </TextField>
+                            </div>
+                            <div className={classes.avatarContainer}>
+                                <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} className={classes.btn}>
+                                    <Avatar style={{ marginRight: '0.5vw' }}>{userInfo.username.charAt(0)}</Avatar>
+                                    {userInfo.username}
+                                    {Boolean(anchorEl) ? <ExpandLess /> : <ExpandMore />}
+                                </Button>
+                                <Menu
+                                    id="simple-menu"
+                                    keepMounted
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                    style={{ marginTop: '3vw', marginLeft: '5vw' }}
+                                >
+                                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                                </Menu>
+                            </div>
+                        </div>
+                        : ''}
+                </div>
+                {isLogged ? 
+                    <Divider className={classes.divider} /> : ''}
             </Toolbar>
-            {isLogged ? <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Divider className={classes.divider} />
-            </div> : ''}
         </AppBar>
     );
 }

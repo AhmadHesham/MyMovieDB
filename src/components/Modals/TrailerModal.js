@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import ReactPlayer from 'react-player';
 import axios from 'axios';
+import { DialogContent } from '@material-ui/core';
 
 export default function TrailerModal(props) {
     const [videoKey, setVideoKey] = React.useState('');
@@ -35,9 +36,10 @@ export default function TrailerModal(props) {
     })
 
     return (
-        <Dialog maxWidth="60vw" onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.open}>
-            {load ? <ReactPlayer playing controls width="50vw" height="30vw" url={`https://youtube.com/watch?v=${videoKey}`} /> : ''}
-
+        <Dialog maxWidth="lg" onClose={props.handleClose} aria-labelledby="customized-dialog-title" open={props.open}>
+            <DialogContent style={{padding: 0, overflow: 'hidden'}}>
+                {load ? <ReactPlayer playing controls width="50vw" height="30vw" url={`https://youtube.com/watch?v=${videoKey}`} /> : ''}
+            </DialogContent>
         </Dialog>
     )
 }

@@ -19,13 +19,12 @@ export default function Poster(props) {
 
     return (
         <Card>
-            {console.log(props.movie)}
             <CardMedia style={{
-                height: '16vw', width: '70vw',
+                height: '15vw', width: '70vw',
                 padding: 0,
                 backgroundImage: `url(https://image.tmdb.org/t/p/original${props.movie.backdrop_path})`,
-                backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', display: 'flex', alignItems: 'center'
-            }}>
+                backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', display: 'flex', alignItems: 'center', cursor: 'pointer'
+            }} onClick={handleOpen}>
                 <div style={{marginLeft: '3vw'}}>
                     <Typography variant="h6" style={{color: 'white'}}>Popular</Typography>
                     <Typography variant="h4" style={{color: 'white', wordWrap: 'break-word', width: '35vw'}}>{props.movie.title}</Typography>
