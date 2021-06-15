@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions'
@@ -7,6 +8,7 @@ import Rating from '@material-ui/lab/Rating';
 import HeartIcon from '../../assets/heart.svg'
 import { CardMedia } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography'
+import {addToFavorites} from '../../actions/UserActions'
 
 const useStyles = makeStyles({
     mediaContainer: {
@@ -30,6 +32,8 @@ export default function Poster(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [hidden, setHidden] = React.useState(true);
+    const dispatch = useDispatch();
+
     React.useEffect(() => {
         if (props.index === 9) {
             props.setLoading(false);
@@ -40,7 +44,6 @@ export default function Poster(props) {
     })
 
     const handleOpen = () => {
-        console.log("AYO")
         setOpen(true);
     }
     const handleClose = () => {
@@ -51,9 +54,12 @@ export default function Poster(props) {
         setHidden(false);
     }
 
-
     const handleMouseLeave = (event) => {
         setHidden(true);
+    }
+
+    const handleAddFavorites = () => {
+        dispatch(addToFavorites(props.movie.title));
     }
 
     return (
@@ -68,7 +74,7 @@ export default function Poster(props) {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>
             {hidden ? '' : <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <img src={HeartIcon} alt="Favorite Button"></img>
+                <img onClick={handleAddFavorites} style={{cursor: 'pointer'}} src={HeartIcon} alt="Favorite Button"></img>
             </CardActions>}
             <CardMedia onClick={handleOpen} className={classes.mediaContainer}>
                 {hidden ? '' : <div style={{width: '7vw', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>

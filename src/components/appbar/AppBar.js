@@ -1,4 +1,6 @@
 import React from 'react';
+import { useHistory } from 'react-router';
+import debounce from 'lodash.debounce'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,10 +13,10 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import axios from 'axios'
 import Logo from '../../assets/logo.svg'
 import Search from '../../assets/search.svg'
 import { signout } from '../../actions/AuthActions'
-import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,8 +24,14 @@ const useStyles = makeStyles((theme) => ({
         height: '5vw',
         boxShadow: 'none'
     },
+    rootLoggedOut: {
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        height: '5vw',
+        boxShadow: 'none'
+    },
     logo: {
-        marginLeft: '7vw'
+        marginLeft: '7vw',
+        cursor: 'pointer'
     },
     search: {
         color: 'white',
@@ -76,6 +84,7 @@ export default function ButtonAppBar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const dispatch = useDispatch();
     const history = useHistory();
+    const apiKey = '6355f15310ac756b161ac38dda6299f7';
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -90,12 +99,31 @@ export default function ButtonAppBar() {
         setAnchorEl(null);
     };
 
+    const handleSearch = (event) => {
+        if(event.target.value === ''){
+            history.push('/home');
+        }
+        else{
+            axios({
+                method: 'GET',
+                url: `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${event.target.value}`
+            })
+            .then(res => {
+                // console.log(res);
+                history.push(`/search?q=${event.target.value}`, res.data.results);
+            })
+            .catch(err => {
+                // console.log(err);
+            })
+        }
+    }
+
     return (
-        <AppBar position="fixed" className={classes.root}>
+        <AppBar position="fixed" className={isLogged ? classes.root : classes.rootLoggedOut}>
             <Toolbar style={{position:'relative', display: 'flex', marginTop: '1vw', flexDirection: 'column'}}>
                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginBottom: '1vw' }}>
                     <div style={{ flexGrow: 1 }}>
-                        <img className={classes.logo} src={Logo} alt="Logo" />
+                        <img onClick={() => history.push('/home')} className={classes.logo} src={Logo} alt="Logo" />
                     </div>
                     {isLogged ?
                         <div className={classes.userProps}>
@@ -104,7 +132,7 @@ export default function ButtonAppBar() {
                                     className: classes.searchProps,
                                     endAdornment: <InputAdornment> <img src={Search} alt="search icon" /> </InputAdornment>
                                 }}
-                                    variant="outlined" className={classes.search} placeholder="Search for a movie...">
+                                    variant="outlined" className={classes.search} placeholder="Search for a movie..." onChange={debounce(handleSearch, 3)}>
                                 </TextField>
                             </div>
                             <div className={classes.avatarContainer}>

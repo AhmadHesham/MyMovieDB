@@ -1,9 +1,3 @@
-// export const signin = (userData, history) => {
-//     return (dispatch, getState) => {
-//         dispatch(setCreds(userData));
-//         history.push('/home');
-//     }
-// };
 export const signin = (userData, history) => {
     return (dispatch, getState) => {
         dispatch(setFlag(true));
