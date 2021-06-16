@@ -10,24 +10,23 @@ import { Typography } from '@material-ui/core';
 const useStyles = makeStyles({
     root: {
         backgroundColor: 'black',
-        height: '100%',
+        minHeight: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column',
-        // overflowY: 'scroll'
+        flexDirection: 'column'
     },
     carouselContainer: {
-        height: '40%',
+        height: '20%',
         width: '100%',
         display: 'flex',
         alignItems: 'flex-start',
         justifyContent: 'center',
-        marginTop: '10vw'
+        marginTop: '7vw'
         // backgroundColor: 'blue'
     },
     listContainer: {
-        height: '60%',
+        height: '20%',
         width: '95%',
         display: 'flex',
         flexDirection: 'column',
@@ -39,7 +38,7 @@ const useStyles = makeStyles({
         },
         '& .Mui-selected': {
             backgroundColor: 'grey'
-        }
+        },
     }
 });
 
@@ -98,39 +97,37 @@ export default function Home() {
 
     return (
         <div className={classes.root}>
-            <div style={{ width: '100%', height: '92vw', marginTop: '8vw', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', backgroundColor: 'black'}}>
-                <div id="carouselContainer" className={classes.carouselContainer}>
-                    <Carousel>
-                        {
-                            movies.map((movie, key) => <Preview key={key} movie={movie} />)
-                        }
-                    </Carousel>
-                </div>
-                <div className={classes.listContainer}>
-                    <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
-                        <Typography style={{ color: 'white', fontWeight: 'bold', position: 'absolute', left: 0, fontSize: '1.5vw' }}>Most Popular</Typography>
-                        <Pagination onChange={handlePageCounter1} variant="outlined" shape="rounded" classes={{ ul: classes.pagination }} count={movies.length / 10} style={{ position: 'absolute', right: 0 }} />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3vw', height: '13vw' }}>
-                        {
-                            movies.slice(pageCounter1 * 10, (pageCounter1 + 1) * 10).map((movie, index) => <Poster index={index} movie={movie} setLoading={setLoading} />)
-                        }
-                    </div>
-                </div>
-
-                <div className={classes.listContainer}>
-                    <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
-                        <Typography style={{ color: 'white', fontWeight: 'bold', position: 'absolute', left: 0, fontSize: '1.5vw' }}>Top Rated</Typography>
-                        <Pagination onChange={handlePageCounter2} variant="outlined" shape="rounded" classes={{ ul: classes.pagination }} count={movies.length / 10} style={{ position: 'absolute', right: 0 }} />
-                    </div>
-                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3vw', height: '13vw' }}>
-                        {
-                            topRated.slice(pageCounter2 * 10, (pageCounter2 + 1) * 10).map((movie, index) => <Poster index={index} movie={movie} setLoading={setLoading} />)
-                        }
-                    </div>
-                </div>
-                <div style={{marginTop: '3vw'}}></div>
+            <div id="carouselContainer" className={classes.carouselContainer}>
+                <Carousel>
+                    {
+                        movies.map((movie, key) => <Preview key={key} movie={movie} />)
+                    }
+                </Carousel>
             </div>
+            <div className={classes.listContainer}>
+                <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+                    <Typography style={{ color: 'white', fontWeight: 'bold', position: 'absolute', left: 0, fontSize: '1.5vw' }}>Most Popular</Typography>
+                    <Pagination onChange={handlePageCounter1} variant="outlined" shape="rounded" classes={{ ul: classes.pagination }} count={movies.length / 10} style={{ position: 'absolute', right: 0 }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3vw', height: '13vw' }}>
+                    {
+                        movies.slice(pageCounter1 * 10, (pageCounter1 + 1) * 10).map((movie, index) => <Poster key={index} index={index} movie={movie} setLoading={setLoading} />)
+                    }
+                </div>
+            </div>
+
+            <div className={classes.listContainer}>
+                <div style={{ display: 'flex', flexDirection: 'row', position: 'relative' }}>
+                    <Typography style={{ color: 'white', fontWeight: 'bold', position: 'absolute', left: 0, fontSize: '1.5vw' }}>Top Rated</Typography>
+                    <Pagination onChange={handlePageCounter2} variant="outlined" shape="rounded" classes={{ ul: classes.pagination }} count={movies.length / 10} style={{ position: 'absolute', right: 0 }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3vw', height: '13vw' }}>
+                    {
+                        topRated.slice(pageCounter2 * 10, (pageCounter2 + 1) * 10).map((movie, index) => <Poster key={index} index={index} movie={movie} setLoading={setLoading} />)
+                    }
+                </div>
+            </div>
+            <div style={{ marginTop: '3vw' }}></div>
         </div>
     )
 }

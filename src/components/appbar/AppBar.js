@@ -29,9 +29,29 @@ const useStyles = makeStyles((theme) => ({
         height: '5vw',
         boxShadow: 'none'
     },
+    toolbarLoggedIn: {
+        position:'relative', 
+        display: 'flex', 
+        marginTop: '1vw', 
+        flexDirection: 'column', 
+        backgroundColor: 'rgba(0, 0, 0, 1)',
+        justifyContent: 'center'
+    },
+    toolbarLoggedOut: {
+        position:'relative', 
+        display: 'flex', 
+        marginTop: '1vw', 
+        flexDirection: 'column', 
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        justifyContent: 'center'
+    },
     logo: {
         marginLeft: '7vw',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        // width: '7vw',
+        // minWidth: '3vw'
+        minWidth: '5vw',
+        minHeight: '2.5vw'
     },
     search: {
         color: 'white',
@@ -41,7 +61,8 @@ const useStyles = makeStyles((theme) => ({
     },
     searchProps: {
         color: 'white',
-        borderRadius: 20
+        borderRadius: 20,
+        minHeight: '2vw'
     },
     userProps: {
         display: 'flex',
@@ -120,7 +141,7 @@ export default function ButtonAppBar() {
 
     return (
         <AppBar position="fixed" className={isLogged ? classes.root : classes.rootLoggedOut}>
-            <Toolbar style={{position:'relative', display: 'flex', marginTop: '1vw', flexDirection: 'column'}}>
+            <Toolbar className={isLogged ? classes.toolbarLoggedIn : classes.toolbarLoggedOut}>
                 <div style={{ display: 'flex', flexDirection: 'row', width: '100%', marginBottom: '1vw' }}>
                     <div style={{ flexGrow: 1 }}>
                         <img onClick={() => history.push('/home')} className={classes.logo} src={Logo} alt="Logo" />

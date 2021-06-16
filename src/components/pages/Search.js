@@ -1,24 +1,33 @@
 import React from 'react'
 import { useLocation, useParams } from 'react-router'
 import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
 import Poster from '../cards/Poster';
 
 const useStyles = makeStyles({
     root: {
         backgroundColor: 'black',
-        height: '100%',
+        minHeight: '100%',
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
         overflowY: 'scroll'
     },
     rowContainer: {
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        flexDirection: 'column', 
-        marginBottom: '3vw'
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        marginBottom: '2vw'
+    },
+    pagination: {
+        '& .MuiPaginationItem-root': {
+            color: 'white'
+        },
+        '& .Mui-selected': {
+            backgroundColor: 'grey'
+        }
     }
 })
 
@@ -33,19 +42,22 @@ export default function Search() {
 
     return (
         <div className={classes.root}>
-            <div style={{marginTop: '15vw', display: 'flex', flexDirection: 'row'}}>
+            <div style={{ marginTop: '7vw', display: 'flex', flexDirection: 'column' }}>
                 {
-                    Array.from(Array(location.state.length / 4).keys()).map((elem, index) => {
+                    Array.from(Array(Math.floor(location.state.length / 5)).keys()).map((elem, index) => {
                         return (
                             <div key={index} className={classes.rowContainer}>
                                 {
-                                    location.state.slice(elem * 4, (elem + 1) * 4).map((movie, index) =>
-                                        <Poster key={index} movie={movie} index={index} setLoading={handleLoading} />)
+                                    location.state.slice(elem * 5, (elem + 1) * 5).map((movie, index) =>
+                                        <Poster key={index} movie={movie} index={index} setLoading={handleLoading} search={true} />)
                                 }
                             </div>
                         )
                     })
                 }
+            </div>
+            <div style={{marginBottom: '1vw'}}>
+                <Pagination className={classes.pagination} count={10} />
             </div>
         </div>
     )

@@ -9,7 +9,7 @@ import Search from './components/pages/Search'
 function App() {
 	const isLogged = useSelector(state => state.isLogged)
 	return (
-		<div style={{height: '100vh'}}>
+		<div style={{minHeight: '100vh', height: '100vh'}}>
 			<Router>
 				<AppBar />
 				<Route exact path="/login" render={() => <Login />}/>

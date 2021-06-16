@@ -69,7 +69,7 @@ export default function Poster(props) {
                 backgroundColor:
                     'black', width: '9vw',
                 backgroundImage: `url(https://image.tmdb.org/t/p/original${props.movie.poster_path})`,
-                marginLeft: (props.index === 0 ? 0 : '1vw'), height: '13vw', backgroundSize: '100% 100%', backgroundPosition: 'center', cursor: 'pointer'
+                marginLeft: (props.index && props.search === 0 ? 0 : '1vw'), height: '13vw', backgroundSize: '100% 100%', backgroundPosition: 'center', cursor: 'pointer'
             }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}>

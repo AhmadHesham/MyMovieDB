@@ -18,9 +18,9 @@ export default function Poster(props) {
     }
 
     return (
-        <Card>
+        <Card style={{width: '70vw'}}>
             <CardMedia style={{
-                height: '15vw', width: '70vw',
+                height: '30vw', width: '70vw',
                 padding: 0,
                 backgroundImage: `url(https://image.tmdb.org/t/p/original${props.movie.backdrop_path})`,
                 backgroundSize: '100% 100%', backgroundPosition: 'center', backgroundRepeat: 'no-repeat', display: 'flex', alignItems: 'center', cursor: 'pointer'
