@@ -63,6 +63,11 @@ export default function Login() {
         password: ''
     })
 
+    const [errors, setErrors] = React.useState({
+        username: false,
+        password: false
+    })
+
     const handleChange = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -73,16 +78,39 @@ export default function Login() {
         }));
     }
     const handleLogin = (event) => {
-        event.preventDefault();
-        dispatch(signin(state, history));
+        if(state.username === ''){
+            setErrors(prevState => ({
+                ...prevState,
+                username: true
+            }))
+        }
+
+        if(state.password === ''){
+            setErrors(prevState => ({
+                ...prevState,
+                password: true
+            }))
+        }
+
+        if(state.username !== '' && state.password !== ''){
+            event.preventDefault();
+            dispatch(signin(state, history));
+        }
     }
 
     return (
         <div className={classes.root}>
             <div className={classes.container}>
                 <div className={classes.form}>
-                    <TextField name="username" style={{ marginBottom: '1vw' }} InputProps={{ className: classes.username }} placeholder="Username" onChange={handleChange} />
-                    <TextField name="password" style={{ marginBottom: '1vw' }} inputProps={{ className: classes.password }} type="password" placeholder="Password" onChange={handleChange} />
+                    <TextField error={errors.username}
+                    name="username" style={{ marginBottom: '1vw' }}
+                    InputProps={{ className: classes.username }} placeholder="Username" onChange={handleChange}
+                    helperText={errors.username ? "Please enter your username!" : ''} />
+                    
+                    <TextField error={errors.password} 
+                    name="password" style={{ marginBottom: '1vw' }} 
+                    InputProps={{ className: classes.password }} type="password" placeholder="Password" onChange={handleChange}
+                    helperText={errors.password ? "Please enter your password!" : ''} />
                     <Button className={classes.btn} variant="outlined" onClick={handleLogin}>Log In</Button>
                 </div>
                 <div className={classes.imageContainer}>

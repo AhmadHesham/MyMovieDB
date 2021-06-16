@@ -12,7 +12,7 @@ function App() {
 		<div style={{minHeight: '100vh', height: '100vh'}}>
 			<Router>
 				<AppBar />
-				<Route exact path="/login" render={() => <Login />}/>
+				<Route exact path="/login" render={() => isLogged ? <Home /> : <Login />}/>
 				<Route exact path="/" render={() => isLogged ? <Home /> : <Login />} />
 				<Route exact path="/home" render={() => isLogged ? <Home /> : <Login />} />
 				<Route exact path="/search" render={() => <Search />} />
