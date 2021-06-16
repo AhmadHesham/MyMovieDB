@@ -48,21 +48,13 @@ export default function Home() {
     const [topRated, setTopRated] = React.useState([]);
     const [pageCounter1, setPageCounter1] = React.useState(0);
     const [pageCounter2, setPageCounter2] = React.useState(0);
-    const [loading, setLoading] = React.useState(true);
-    // const [imageHeight, setImageHeight] = React.useState();
     const apiKey = '6355f15310ac756b161ac38dda6299f7';
 
-    // const carouselObserver = new ResizeObserver((entries) => {
-    //     const rect = entries[0].contentRect;
-    //     setImageHeight(rect.height);
-    //     console.log(rect.height)
-    // });
-
-    const handlePageCounter1 = (event) => {
-        setPageCounter1((pageCounter1 + 1) % (movies.length / 10));
+    const handlePageCounter1 = (event, pageNumber) => {
+        setPageCounter1(pageNumber - 1);
     }
-    const handlePageCounter2 = (event) => {
-        setPageCounter2((pageCounter2 + 1) % (topRated.length / 10));
+    const handlePageCounter2 = (event, pageNumber) => {
+        setPageCounter2(pageNumber - 1);
     }
 
     React.useEffect(() => {
@@ -92,7 +84,6 @@ export default function Home() {
 
         loadMoviesTop();
         loadMoviesPopular();
-        // carouselObserver.observe(document.querySelector("#carouselContainer"));
     }, []);
 
     return (
@@ -111,7 +102,7 @@ export default function Home() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3vw', height: '13vw' }}>
                     {
-                        movies.slice(pageCounter1 * 10, (pageCounter1 + 1) * 10).map((movie, index) => <Poster key={index} index={index} movie={movie} setLoading={setLoading} />)
+                        movies.slice(pageCounter1 * 10, (pageCounter1 + 1) * 10).map((movie, index) => <Poster key={index} index={index} movie={movie} />)
                     }
                 </div>
             </div>
@@ -123,7 +114,7 @@ export default function Home() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'row', marginTop: '3vw', height: '13vw' }}>
                     {
-                        topRated.slice(pageCounter2 * 10, (pageCounter2 + 1) * 10).map((movie, index) => <Poster key={index} index={index} movie={movie} setLoading={setLoading} />)
+                        topRated.slice(pageCounter2 * 10, (pageCounter2 + 1) * 10).map((movie, index) => <Poster key={index} index={index} movie={movie}/>)
                     }
                 </div>
             </div>

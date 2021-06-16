@@ -32,16 +32,8 @@ export default function Poster(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [hidden, setHidden] = React.useState(true);
+    const [src, setSrc] = React.useState('');
     const dispatch = useDispatch();
-
-    React.useEffect(() => {
-        if (props.index === 9) {
-            props.setLoading(false);
-        }
-        else {
-            props.setLoading(true);
-        }
-    })
 
     const handleOpen = () => {
         setOpen(true);
@@ -62,13 +54,21 @@ export default function Poster(props) {
         dispatch(addToFavorites(props.movie.title));
     }
 
+    React.useEffect(() => {
+        const imageLoader = new Image();
+        imageLoader.src = `https://image.tmdb.org/t/p/original${props.movie.poster_path}`;
+        imageLoader.onload = () => {
+            setSrc(`https://image.tmdb.org/t/p/original${props.movie.poster_path}`);
+        }
+    })
+
     return (
         <Card
             id={`poster${props.index}`}
             style={{
                 backgroundColor:
                     'black', width: '9vw',
-                backgroundImage: `url(https://image.tmdb.org/t/p/original${props.movie.poster_path})`,
+                backgroundImage: `url(${src || 'https://upload.wikimedia.org/wikipedia/commons/8/86/Solid_grey.svg'})`,
                 marginLeft: (props.index && props.search === 0 ? 0 : '1vw'), height: '13vw', backgroundSize: '100% 100%', backgroundPosition: 'center', cursor: 'pointer'
             }}
             onMouseEnter={handleMouseEnter}
@@ -76,12 +76,12 @@ export default function Poster(props) {
             {hidden ? '' : <CardActions style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <img onClick={handleAddFavorites} style={{cursor: 'pointer'}} src={HeartIcon} alt="Favorite Button"></img>
             </CardActions>}
-            <CardMedia onClick={handleOpen} className={classes.mediaContainer}>
+            <div onClick={handleOpen} className={classes.mediaContainer}>
                 {hidden ? '' : <div style={{width: '7vw', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
                     <Rating style={{ marginLeft: '0.5vw' }} readOnly value={props.movie.vote_average / 2} />
                     <Typography gutterBottom className={classes.desc} variant="caption">{props.movie.overview}</Typography>
                 </div>}
-            </CardMedia>
+            </div>
             <TrailerModal movieID={props.movie.id} open={open} handleClose={handleClose} />
         </Card>
     )

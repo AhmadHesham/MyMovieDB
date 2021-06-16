@@ -131,7 +131,7 @@ export default function ButtonAppBar() {
             })
             .then(res => {
                 // console.log(res);
-                history.push(`/search?q=${event.target.value}`, res.data.results);
+                history.push(`/search?q=${event.target.value}`, res.data);
             })
             .catch(err => {
                 // console.log(err);
@@ -153,7 +153,7 @@ export default function ButtonAppBar() {
                                     className: classes.searchProps,
                                     endAdornment: <InputAdornment> <img src={Search} alt="search icon" /> </InputAdornment>
                                 }}
-                                    variant="outlined" className={classes.search} placeholder="Search for a movie..." onChange={debounce(handleSearch, 3)}>
+                                    variant="outlined" className={classes.search} placeholder="Search for a movie..." onChange={debounce(handleSearch, 1000)}>
                                 </TextField>
                             </div>
                             <div className={classes.avatarContainer}>
